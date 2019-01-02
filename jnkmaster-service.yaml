@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkinsci
+spec:
+  type: NodePort  # NodePort for access to the application outside of kubernetes
+  ports:
+    - port: 8080    # Pod port
+      targetPort: 8080   # Container port
+      nodePort: 32011  # Service Port
+  selector:   # choose which pod you want to slect
+    app: jenkinsci  # Define it in example-deployment.yaml

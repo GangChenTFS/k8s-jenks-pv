@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkinsci
+  namespace: k8s-bld
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkinsci  # define this when service to slect it
+    spec:
+      containers:
+        - name: jenkins
+          image: jnk-master-lab2-v1:latest  # the Image which you want to use
+          imagePullPolicy: IfNotPresent # if the image is not in local, pull it from image respository
+          env:
+            - name: JAVA_OPTS
+              value: -Djenkins.install.runSetupWizard=false
+          ports:
+            - name: http-port
+              containerPort: 8080  # Container port
+            - name: jnlp-port
+              containerPort: 50000 
+          volumeMounts:  # The volume for mounting in contianer
+            - name: jenkins-home
+              mountPath: /home/cascm/jenkins # Mount point in container
+      volumes:
+        - name: jenkins-home # the volume you want to mount to contianer
+          emptyDir: {}
+

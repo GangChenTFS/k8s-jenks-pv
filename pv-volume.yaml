@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: jnkhome-pv-volume
+  namespace: k8s-bld
+  annotations:
+    pv.beta.kubernetes/gid: "1000"
+  labels:
+    type: nfs-share
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/icds/cascm/jenkins"

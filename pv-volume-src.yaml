@@ -1,0 +1,17 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: src-pv-volume
+  namespace: k8s-bld
+  annotations:
+    pv.beta.kubernetes/gid: "1000"
+  labels:
+    type: nfs-src
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/icds/cascm/src"
